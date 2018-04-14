@@ -60,3 +60,7 @@ typings/
 # IntelliJ
 .idea
 *.iml
+
+# Local config file folder containing OAuth keys
+config/
+
