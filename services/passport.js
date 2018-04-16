@@ -34,7 +34,10 @@ passport.use(
         {
             clientID: keys.googleClientID,
             clientSecret: keys.googleClientSecret,
-            callbackURL: '/auth/google/callback'
+            callbackURL: '/auth/google/callback',
+            // Trust each proxy enroute
+            //  - prevents callback URL being downgraded from https -> http
+            proxy: true
         },
         (accessToken, refreshToken, profile, done) => {
             // console.log(`access token : ${accessToken}`);
