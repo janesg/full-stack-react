@@ -5,30 +5,38 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-
+const cookieSession = require('cookie-session');
+const mongoose = require('mongoose');
 const keys = require('./config/keys');
+
+// Ensure model is created before passport uses it
+require('./models/User');
+require('./services/passport');
+
+mongoose.connect(keys.mongoURI);
 
 const app = express();
 
-// Passport setup for Google OAuth
-passport.use(
-    new GoogleStrategy(
-        {
-            clientID: keys.googleClientID,
-            clientSecret: keys.googleClientSecret,
-            callbackURL: '/auth/google/callback'
-        },
-        (accessToken, refreshToken, profile, done) => {
-            console.log(`access token : ${accessToken}`);
-            console.log(`refresh token : ${refreshToken}`);
-            console.log(`profile : ${profile}`);
-            console.log('profile :', profile);
-        }
-    )
+// Wire up middlewares for route handlers
+app.use(
+    // Limit on total size of all cookies for a domain <= 4093 bytes
+    // We are only using internal user id so well within limit
+    //  - stick all data in the cookie -> use cookie-session
+    // If we had lots more session data then:
+    //  - use express-session instead of cookie-session
+    //  - this just passes a session id in cookie and is used to look up
+    //    the related session data in an external store (e.g. database/cache)
+    cookieSession({
+        // 30 Days in milliseconds
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+        keys: [keys.cookieKey]
+    })
 );
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Set up routes
+// Required file exports a function which we then call with app as parameter
 require('./routes/index')(app);
 require('./routes/auth')(app);
 

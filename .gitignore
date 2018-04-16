@@ -61,6 +61,6 @@ typings/
 .idea
 *.iml
 
-# Local config file folder containing OAuth keys
-config/
+# Local dev config values containing keys
+config/dev.js
 
