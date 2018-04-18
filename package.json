@@ -1,6 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
+  "description": "",
   "private": true,
   "engines": {
     "node": "8.11.1",
@@ -12,9 +13,12 @@
   },
   "scripts": {
     "start": "node ./bin/server.js",
-    "dev": "nodemon ./bin/server.js"
+    "server": "nodemon ./bin/server.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
+    "concurrently": "^3.5.1",
     "cookie-parser": "~1.4.3",
     "cookie-session": "^2.0.0-beta.3",
     "express": "~4.16.0",

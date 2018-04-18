@@ -35,31 +35,41 @@ passport.use(
             clientID: keys.googleClientID,
             clientSecret: keys.googleClientSecret,
             callbackURL: '/auth/google/callback',
-            // Trust each proxy enroute
+            // Trust each proxy enroute between client and our server
             //  - prevents callback URL being downgraded from https -> http
             proxy: true
         },
-        (accessToken, refreshToken, profile, done) => {
-            // console.log(`access token : ${accessToken}`);
-            // console.log(`refresh token : ${refreshToken}`);
+        // (accessToken, refreshToken, profile, done) => {
+        //     // console.log(`access token : ${accessToken}`);
+        //     // console.log(`refresh token : ${refreshToken}`);
+        //
+        //     // This doesn't print out the profile Object
+        //     //  console.log(`profile : ${profile}`);
+        //     // ...but this does !
+        //     //  console.log('profile :', profile);
+        //
+        //     User.findOne({ googleId: profile.id })
+        //         .then(existingUser => {
+        //             if (existingUser) {
+        //                 done(null, existingUser);
+        //             } else {
+        //                 new User({ googleId: profile.id })
+        //                     .save()
+        //                     .then(user => {
+        //                         done(null, user);
+        //                     });
+        //             }
+        //         });
+        // },
+        async (accessToken, refreshToken, profile, done) => {
+            // Refactored to use async/await syntax
+            const existingUser = await User.findOne({ googleId: profile.id });
 
-            // This doesn't print out the profile Object
-            //  console.log(`profile : ${profile}`);
-            // ...but this does !
-            //  console.log('profile :', profile);
+            if (existingUser) {
+                return done(null, existingUser);
+            }
 
-            User.findOne({ googleId: profile.id })
-                .then(existingUser => {
-                    if (existingUser) {
-                        done(null, existingUser);
-                    } else {
-                        new User({ googleId: profile.id })
-                            .save()
-                            .then(user => {
-                                done(null, user);
-                            });
-                    }
-                });
+            done(null, await new User({ googleId: profile.id }).save());
         }
     )
 );
