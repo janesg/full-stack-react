@@ -1,3 +1,9 @@
+// Note: Back-end makes use of CommonJS modules:
+// Characterised by following statements:
+//  - require
+//  - module.exports
+// https://blog.risingstack.com/node-js-at-scale-module-system-commonjs-require/
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -7,6 +13,7 @@ const logger = require('morgan');
 const passport = require('passport');
 const cookieSession = require('cookie-session');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const keys = require('./config/keys');
 
 // Ensure model is created before passport uses it
@@ -18,6 +25,7 @@ mongoose.connect(keys.mongoURI);
 const app = express();
 
 // Wire up middlewares for route handlers
+app.use(bodyParser.json());
 app.use(
     // Limit on total size of all cookies for a domain <= 4093 bytes
     // We are only using internal user id so well within limit
@@ -39,6 +47,7 @@ app.use(passport.session());
 // Required file exports a function which we then call with app as parameter
 require('./routes/index')(app);
 require('./routes/auth')(app);
+require('./routes/billing')(app);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -18,6 +18,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "concurrently": "^3.5.1",
     "cookie-parser": "~1.4.3",
     "cookie-session": "^2.0.0-beta.3",
@@ -27,7 +28,8 @@
     "mongoose": "^5.0.14",
     "morgan": "~1.9.0",
     "passport": "^0.4.0",
-    "passport-google-oauth20": "^1.0.0"
+    "passport-google-oauth20": "^1.0.0",
+    "stripe": "^5.8.0"
   },
   "devDependencies": {
     "debug": "~2.6.9",

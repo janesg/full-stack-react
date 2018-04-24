@@ -1,6 +1,11 @@
 // Root component
 // Render layer control - React Router
 
+// Note: Front-end makes use of ES 2015 modules:
+// Characterised by following statements:
+//  - import
+//  - export default
+
 // CSS module import
 import 'materialize-css/dist/css/materialize.min.css';
 
