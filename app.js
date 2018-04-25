@@ -24,6 +24,10 @@ mongoose.connect(keys.mongoURI);
 
 const app = express();
 
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
+
 // Wire up middlewares for route handlers
 app.use(bodyParser.json());
 app.use(
@@ -43,21 +47,12 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Set up routes
-// Required file exports a function which we then call with app as parameter
-require('./routes/index')(app);
-require('./routes/auth')(app);
-require('./routes/billing')(app);
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
+// app.use(express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -74,5 +69,24 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
+
+// Set up routes
+// Required file exports a function which we then call with app as parameter
+require('./routes/index')(app);
+require('./routes/auth')(app);
+require('./routes/billing')(app);
+
+// Handle Production config
+if (process.env.NODE_ENV === 'production') {
+    // Express will serve up production built assets
+    // e.g. main.js, main.css etc
+    app.use(express.static('client/build'));
+
+    // Express will serve up index.html
+    // if it doesn't recognise the route
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
 
 module.exports = app;
