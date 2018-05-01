@@ -18,6 +18,7 @@ const keys = require('./config/keys');
 
 // Ensure model is created before passport uses it
 require('./models/User');
+require('./models/Survey');
 require('./services/passport');
 
 mongoose.connect(keys.mongoURI);
@@ -71,9 +72,9 @@ app.use(passport.session());
 
 // Set up routes
 // Required file exports a function which we then call with app as parameter
-// require('./routes/index')(app);
 require('./routes/auth')(app);
 require('./routes/billing')(app);
+require('./routes/survey')(app);
 
 // Handle Production config
 if (process.env.NODE_ENV === 'production') {
