@@ -19,4 +19,18 @@ export const handleToken = token => async dispatch => {
         type: FETCH_USER,
         payload: res.data
     });
-}
+};
+
+export const submitSurvey = (values, history) => async dispatch => {
+    const res = await axios.post('/api/surveys', values);
+
+    // Programmatically navigate to surveys page using history from withRouter
+    history.push('/surveys');
+
+    // User has changed (credits reduced) so dispatch action accordingly
+    dispatch({
+        type: FETCH_USER,
+        payload: res.data
+    });
+};
+

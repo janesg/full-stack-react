@@ -16,10 +16,8 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import Header from './Header';
 import Landing from './Landing';
-
-// Dummy functional components
-const Dashboard = () => <h2>Dashboard</h2>;
-const SurveyNew = () => <h2>New Survey</h2>;
+import Dashboard from './Dashboard';
+import SurveyNew from './surveys/SurveyNew';
 
 class App extends Component {
 
@@ -30,21 +28,19 @@ class App extends Component {
     }
 
     render() {
-        // Materialize CSS works best with a root container that all content placed within
-        // Makes the UI responsive
+        // Materialize CSS works best with a root container that all rendered
+        // content placed within. Makes the UI responsive
         return (
-            <div className="container">
+            <BrowserRouter>
                 { /* BrowserRouter can only have a single child ... hence 'div' */ }
-                <BrowserRouter>
-                    <div>
-                        { /* As Header is not tied to a route, it is always visible */ }
-                        <Header />
-                        <Route exact path="/" component={ Landing } />
-                        <Route exact path="/surveys" component={ Dashboard } />
-                        <Route path="/surveys/new" component={ SurveyNew } />
-                    </div>
-                </BrowserRouter>
-            </div>
+                <div className="container">
+                    { /* As Header is not tied to a route, it is always visible */ }
+                    <Header />
+                    <Route exact path="/" component={ Landing } />
+                    <Route exact path="/surveys" component={ Dashboard } />
+                    <Route path="/surveys/new" component={ SurveyNew } />
+                </div>
+            </BrowserRouter>
         );
     }
 };

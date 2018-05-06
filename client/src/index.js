@@ -8,11 +8,10 @@ import reduxThunk from 'redux-thunk';
 import App from './components/App';
 import reducers from './reducers';
 
-// Temporary test code for exercising Mailer
-import axios from 'axios';
-window.axios = axios;
-
-// Type following directly into browser console to create and send email:
+// Temporary test code for exercising Mailer directly in browser console
+// import axios from 'axios';
+// window.axios = axios;
+// = > type following directly into browser console to create and send email:
 // const survey = { title: 'my title', subject: 'my subject', recipients: 'gary.janes065@gmail.com', body: 'This is the Body of the email' };
 // axios.post('/api/surveys', survey);
 
