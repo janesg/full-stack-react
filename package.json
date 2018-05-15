@@ -17,6 +17,12 @@
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run localtunnel\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "//": [
+      "This is an example of a valid comment within package.json",
+      ".............",
+      "To test locally using localtunnel, the SendGrid event notification should be configured",
+      "with HTTP Post value of: https://ayhzejwmswfv.localtunnel.me/api/surveys/webhooks"
+    ],
     "localtunnel": "lt -p 5000 -s ayhzejwmswfv",
     "localtunnel-script": "forever sendgrid_webhook.js"
   },

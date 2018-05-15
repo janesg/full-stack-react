@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const Path = require('path-parser');
+const Path = require('path-parser').default;
 // ES6 destructuring to just pick out what we need from module exports
 const { URL } = require('url');
 const mongoose = require('mongoose');
