@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SurveyList from './surveys/SurveyList';
 
 // Use a React functional component for simplicity
 // - as functional components are stateless, they completely
@@ -11,7 +12,7 @@ import { Link } from 'react-router-dom';
 const Dashboard = () => {
     return (
         <div>
-            <h2>Dashboard</h2>
+            <SurveyList />
             <div className="fixed-action-btn">
                 <Link to="/surveys/new" className="btn-floating btn-large red">
                     <i className="material-icons">add</i>

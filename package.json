@@ -15,8 +15,10 @@
     "start": "node ./bin/server.js",
     "server": "nodemon ./bin/server.js",
     "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run localtunnel\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "localtunnel": "lt -p 5000 -s ayhzejwmswfv",
+    "localtunnel-script": "forever sendgrid_webhook.js"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -26,15 +28,19 @@
     "express": "~4.16.0",
     "hbs": "~4.0.1",
     "http-errors": "~1.6.2",
+    "lodash": "^4.17.10",
     "mongoose": "^5.0.14",
     "morgan": "~1.9.0",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^1.0.0",
+    "path-parser": "^4.0.4",
     "sendgrid": "^5.2.3",
     "stripe": "^5.8.0"
   },
   "devDependencies": {
     "debug": "~2.6.9",
+    "forever": "^0.15.3",
+    "localtunnel": "^1.9.0",
     "nodemon": "^1.17.3"
   }
 }
