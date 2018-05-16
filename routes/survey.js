@@ -71,8 +71,6 @@ module.exports = app => {
 
     app.post('/api/surveys/webhooks', (req, res) => {
 
-        console.log('Webhook callback invoked...');
-
         const pParser = new Path('/api/surveys/:surveyId/:choice');
 
         _.chain(req.body)
@@ -83,7 +81,7 @@ module.exports = app => {
                 // surveyId and choice properties
                 if (match) {
                     // Create new object with email property and those from match
-                    return Object.assign(email, match);
+                    return Object.assign({ email }, match);
                 }
             })
             .compact()      // Removes 'undefined' elements
@@ -105,7 +103,7 @@ module.exports = app => {
                         $elemMatch: { email: email, responded: false }
                     }
                 }, {
-                    $inc: { [choice]: 1 },
+                    $inc: { [choice + 'Count']: 1 },
                     $set: { 'recipients.$.responded': true },
                     lastResponded: new Date()
                 }).exec();

@@ -21,7 +21,8 @@
       "This is an example of a valid comment within package.json",
       ".............",
       "To test locally using localtunnel, the SendGrid event notification should be configured",
-      "with HTTP Post value of: https://ayhzejwmswfv.localtunnel.me/api/surveys/webhooks"
+      "with HTTP Post value of: https://ayhzejwmswfv.localtunnel.me/api/surveys/webhooks",
+      "For Production it should be set to: https://obscure-crag-86993.herokuapp.com/api/surveys/webhooks"
     ],
     "localtunnel": "lt -p 5000 -s ayhzejwmswfv",
     "localtunnel-script": "forever sendgrid_webhook.js"

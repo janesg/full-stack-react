@@ -4,6 +4,11 @@ import { fetchSurveys } from '../../actions';
 
 class SurveyList extends Component {
 
+    // Fetch the surveys when component first mounted
+    componentDidMount() {
+        this.props.fetchSurveys();
+    }
+
     renderSurveys() {
         // Reverse list so that newest is at the top
         return this.props.surveys.reverse().map(survey => {
@@ -19,8 +24,8 @@ class SurveyList extends Component {
                         </p>
                     </div>
                     <div className="card-action">
-                        <a>Yes: { survey.yes }</a>
-                        <a>No: { survey.no }</a>
+                        <a>Yes: { survey.yesCount }</a>
+                        <a>No: { survey.noCount }</a>
                     </div>
                 </div>
             );
@@ -30,7 +35,7 @@ class SurveyList extends Component {
     render() {
         return (
             <div>
-                { this.renderSurveys }
+                { this.renderSurveys() }
             </div>
         );
     }
