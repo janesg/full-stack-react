@@ -12,6 +12,12 @@ class SurveyList extends Component {
     renderSurveys() {
         // Reverse list so that newest is at the top
         return this.props.surveys.reverse().map(survey => {
+
+            const last = survey.lastResponded ?
+                (<span className="right">
+                    Last response received : { new Date(survey.lastResponded).toLocaleString() }
+                </span>) : (null);
+
             return (
                 <div className="card darken-1" key={ survey._id }>
                     <div className="card-content">
@@ -19,9 +25,10 @@ class SurveyList extends Component {
                         <p>
                             { survey.body }
                         </p>
-                        <p className="right">
-                            Sent on: { new Date(survey.dateSent).toLocaleDateString() }
-                        </p>
+                        <div style={{ marginTop: '10px' }}>
+                            <span>Sent on : { new Date(survey.dateSent).toLocaleString() }</span>
+                            { last }
+                        </div>
                     </div>
                     <div className="card-action">
                         <a>Yes: { survey.yesCount }</a>
