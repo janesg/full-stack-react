@@ -81,6 +81,8 @@ module.exports = app => {
                 // surveyId and choice properties
                 if (match) {
                     // Create new object with email property and those from match
+                    // Another option is use the Object spread operator
+                    // return { email, ...match };
                     return Object.assign({ email }, match);
                 }
             })
